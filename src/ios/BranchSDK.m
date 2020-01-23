@@ -779,7 +779,7 @@
   NSMutableDictionary *json = [NSMutableDictionary new];
   
   Branch *branch = [self getInstance];
-  [branch lastAttributedTouchDataWithAttributionWindow:-1 completion:^(BranchLastAttributedTouchData * _Nullable latd) {
+  [branch lastAttributedTouchDataWithAttributionWindow:0 completion:^(BranchLastAttributedTouchData * _Nullable latd) {
     CDVPluginResult* pluginResult = nil;
     if (latd) {
       [json setObject:latd.attributionWindow forKey:@"attribution_window"];
