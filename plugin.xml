@@ -83,7 +83,7 @@ SOFTWARE.
 
       <framework src="iAd.framework" />
   		<framework src="AdSupport.framework" />
-      <framework src="MobileCoreSevices.framework" />
+      <framework src="MobileCoreServices.framework" />
       <framework src="CoreSpotlight.framework" />
     
       <podspec>
