@@ -125,25 +125,25 @@
     receivers = removeBasedOnAndroidName(receivers, androidName);
 
     // add new
-    manifest.manifest.application[0].receiver = receivers.concat([
-      {
-        $: {
-          "android:name": androidName,
-          "android:exported": true
-        },
-        "intent-filter": [
-          {
-            action: [
-              {
-                $: {
-                  "android:name": "com.android.vending.INSTALL_REFERRER"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ]);
+    // manifest.manifest.application[0].receiver = receivers.concat([
+    //   {
+    //     $: {
+    //       "android:name": androidName,
+    //       "android:exported": true
+    //     },
+    //     "intent-filter": [
+    //       {
+    //         action: [
+    //           {
+    //             $: {
+    //               "android:name": "com.android.vending.INSTALL_REFERRER"
+    //             }
+    //           }
+    //         ]
+    //       }
+    //     ]
+    //   }
+    // ]);
 
     return manifest;
   }
