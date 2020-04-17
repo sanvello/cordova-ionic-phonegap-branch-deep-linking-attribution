@@ -2,11 +2,8 @@
 
 #import "BranchNPM.h"
 
-#ifdef BRANCH_NPM
-#import "Branch.h"
-#else
 #import <Branch/Branch.h>
-#endif
+
 
 // Provides Ionic Capacitor compatibility
 #import <Cordova/CDVPlugin.h>
