@@ -1,14 +1,8 @@
 #import "BranchNPM.h"
 
-#ifdef BRANCH_NPM
-#import "Branch.h"
-#import "BranchLinkProperties.h"
-#import "BranchUniversalObject.h"
-#else
 #import <Branch/Branch.h>
 #import <Branch/BranchLinkProperties.h>
 #import <Branch/BranchUniversalObject.h>
-#endif
 
 #import <Cordova/CDV.h>
 
