@@ -396,7 +396,13 @@ NSString * const pluginVersion = @"4.1.3";
 {
   bool enabled = [[command.arguments objectAtIndex:0] boolValue];
   if (enabled) {
-    [[Branch getInstance] delayInitToCheckForSearchAds];
+    Branch *branch = [Branch getInstance];
+
+    [branch delayInitToCheckForSearchAds];
+
+    [branch useLongerWaitForAppleSearchAds];
+
+    [branch ignoreAppleSearchAdsTestData];
   }
 
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:enabled];
