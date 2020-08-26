@@ -403,6 +403,9 @@ NSString * const pluginVersion = @"4.1.3";
     [branch useLongerWaitForAppleSearchAds];
 
     [branch ignoreAppleSearchAdsTestData];
+
+    // I believe that this is necessary for iOS 14 integration. 
+    [[BNCSKAdNetwork sharedInstance] registerAppForAdNetworkAttribution];
   }
 
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:enabled];
