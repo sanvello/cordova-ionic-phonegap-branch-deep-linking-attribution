@@ -1,6 +1,7 @@
 #import "BranchNPM.h"
 
 #import <Branch/Branch.h>
+#import <Branch/BNCSKAdNetwork.h>
 #import <Branch/BranchLinkProperties.h>
 #import <Branch/BranchUniversalObject.h>
 
