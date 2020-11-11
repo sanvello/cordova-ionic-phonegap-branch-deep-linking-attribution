@@ -123,18 +123,20 @@ Branch.prototype.setCookieBasedMatching = function setCookieBasedMatching(
     : null;
 };
 
-//DEPRECATED
+//DEPRECATED - but required for Sanvello
 Branch.prototype.delayInitToCheckForSearchAds = function delayInitToCheckForSearchAds(
   isEnabled
 ) {
   // stub call from known issue calling it from JS
-  return new Promise(function promise(resolve, reject) {
-    resolve(false);
-  });
+  // return new Promise(function promise(resolve, reject) {
+  //   resolve(false);
+  // });
 
-  // var value = typeof isEnabled !== "boolean" ? false : isEnabled;
+  // We have been using this for a while, not sure why it was deprecated. We need it for things
+  // to work correctly with iOS.
+  var value = typeof isEnabled !== "boolean" ? false : isEnabled;
 
-  // return execute("delayInitToCheckForSearchAds", [value]);
+  return execute("delayInitToCheckForSearchAds", [value]);
 };
 
 Branch.prototype.getFirstReferringParams = function getFirstReferringParams() {
