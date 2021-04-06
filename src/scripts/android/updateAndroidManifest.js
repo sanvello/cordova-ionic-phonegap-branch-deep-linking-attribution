@@ -125,7 +125,7 @@
     manifest.manifest.application[0].activity[mainActivityIndex].$[
       "android:launchMode"
     ] =
-      "singleTask";
+      "singleTop";
     return manifest;
   }
 
