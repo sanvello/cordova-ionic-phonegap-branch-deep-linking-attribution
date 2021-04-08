@@ -17,10 +17,7 @@
     // update manifest
     manifest.file = updateBranchMetaData(manifest.file, preferences);
     manifest.file = removeDeprecatedInstalReferrerBroadcastReceiver(manifest.file);
-    manifest.file = updateLaunchOptionToSingleTask(
-      manifest.file,
-      manifest.mainActivityIndex
-    );
+
     manifest.file = updateBranchURIScheme(
       manifest.file,
       manifest.mainActivityIndex,
@@ -117,16 +114,6 @@
     manifest.manifest.application[0].receiver = removeBasedOnAndroidName(receivers, androidName);
 
     return manifest;  
-  }
-
-  // adds to main <activity>:
-  //    android:launchMode="singleTask"
-  function updateLaunchOptionToSingleTask(manifest, mainActivityIndex) {
-    manifest.manifest.application[0].activity[mainActivityIndex].$[
-      "android:launchMode"
-    ] =
-      "singleTop";
-    return manifest;
   }
 
   // adds to main <activity> for URI Scheme
