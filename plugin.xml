@@ -58,6 +58,14 @@ SOFTWARE.
         <param name="onload" value="true" />
       </feature>
     </config-file>
+    <config-file target="AndroidManifest.xml" parent="application">
+      <activity android:name="io.branch.IntentHandlingActivity" android:launchMode="singleTask">
+        <category android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+      </activity>
+    </config-file>
+    
 
     <!-- Manifest configuration is done via a js script.  We should move it to this config in the future. -->
 

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   // properties
 
   const path = require("path");
@@ -6,7 +6,7 @@
 
   // entry
   module.exports = {
-    writePreferences: writePreferences
+    writePreferences: writePreferences,
   };
 
   // injects config.xml preferences into AndroidManifest.xml file.
@@ -16,7 +16,9 @@
 
     // update manifest
     manifest.file = updateBranchMetaData(manifest.file, preferences);
-    manifest.file = removeDeprecatedInstalReferrerBroadcastReceiver(manifest.file);
+    manifest.file = removeDeprecatedInstalReferrerBroadcastReceiver(
+      manifest.file
+    );
 
     manifest.file = updateBranchURIScheme(
       manifest.file,
@@ -71,7 +73,7 @@
     return {
       file: manifest,
       path: pathToManifest,
-      mainActivityIndex: mainActivityIndex
+      mainActivityIndex: mainActivityIndex,
     };
   }
 
@@ -84,7 +86,7 @@
     const keys = ["io.branch.sdk.BranchKey", "io.branch.sdk.TestMode"];
     const vals = [
       preferences.branchKey,
-      preferences.androidTestMode || "false"
+      preferences.androidTestMode || "false",
     ];
 
     // remove old
@@ -99,8 +101,8 @@
       metadata.push({
         $: {
           "android:name": key,
-          "android:value": val
-        }
+          "android:value": val,
+        },
       });
     }
     manifest.manifest.application[0]["meta-data"] = metadatas.concat(metadata);
@@ -108,12 +110,15 @@
     return manifest;
   }
 
-  function removeDeprecatedInstalReferrerBroadcastReceiver(manifest) { 
-    let receivers = manifest.manifest.application[0].receiver || [];  
+  function removeDeprecatedInstalReferrerBroadcastReceiver(manifest) {
+    let receivers = manifest.manifest.application[0].receiver || [];
     const androidName = "io.branch.referral.InstallListener";
-    manifest.manifest.application[0].receiver = removeBasedOnAndroidName(receivers, androidName);
+    manifest.manifest.application[0].receiver = removeBasedOnAndroidName(
+      receivers,
+      androidName
+    );
 
-    return manifest;  
+    return manifest;
   }
 
   // adds to main <activity> for URI Scheme
@@ -139,35 +144,35 @@
     ] = intentFilters.concat([
       {
         $: {
-          "android:name": androidName
+          "android:name": androidName,
         },
         action: [
           {
             $: {
-              "android:name": "android.intent.action.VIEW"
-            }
-          }
+              "android:name": "android.intent.action.VIEW",
+            },
+          },
         ],
         category: [
           {
             $: {
-              "android:name": "android.intent.category.DEFAULT"
-            }
+              "android:name": "android.intent.category.DEFAULT",
+            },
           },
           {
             $: {
-              "android:name": "android.intent.category.BROWSABLE"
-            }
-          }
+              "android:name": "android.intent.category.BROWSABLE",
+            },
+          },
         ],
         data: [
           {
             $: {
-              "android:scheme": preferences.uriScheme
-            }
-          }
-        ]
-      }
+              "android:scheme": preferences.uriScheme,
+            },
+          },
+        ],
+      },
     ]);
 
     return manifest;
@@ -181,11 +186,7 @@
   //       <data android:scheme="https" android:host="ethan.app.link" />
   //       <data android:scheme="https" android:host="ethan-alternate.app.link" />
   //    </intent-filter>
-  function updateBranchAppLinks(
-    manifest,
-    mainActivityIndex,
-    preferences
-  ) {
+  function updateBranchAppLinks(manifest, mainActivityIndex, preferences) {
     let intentFilters =
       manifest.manifest.application[0].activity[mainActivityIndex][
         "intent-filter"
@@ -194,7 +195,7 @@
     const androidName = "io.branch.sdk.AppLink";
     const header = {
       "android:name": androidName,
-      "android:autoVerify": "true"
+      "android:autoVerify": "true",
     };
 
     // remove
@@ -209,24 +210,24 @@
         action: [
           {
             $: {
-              "android:name": "android.intent.action.VIEW"
-            }
-          }
+              "android:name": "android.intent.action.VIEW",
+            },
+          },
         ],
         category: [
           {
             $: {
-              "android:name": "android.intent.category.DEFAULT"
-            }
+              "android:name": "android.intent.category.DEFAULT",
+            },
           },
           {
             $: {
-              "android:name": "android.intent.category.BROWSABLE"
-            }
-          }
+              "android:name": "android.intent.category.BROWSABLE",
+            },
+          },
         ],
-        data: data
-      }
+        data: data,
+      },
     ]);
 
     return manifest;
@@ -243,10 +244,7 @@
       // app.link link domains need -alternate associated domains as well (for Deep Views)
       if (linkDomain.indexOf("app.link") !== -1) {
         const first = linkDomain.split(".")[0];
-        const rest = linkDomain
-          .split(".")
-          .slice(1)
-          .join(".");
+        const rest = linkDomain.split(".").slice(1).join(".");
         const alternate = `${first}-alternate` + `.${rest}`;
 
         intentFilterData.push(getAppLinkIntentFilterDictionary(linkDomain));
@@ -279,8 +277,8 @@
     const output = {
       $: {
         "android:host": linkDomain,
-        "android:scheme": scheme
-      }
+        "android:scheme": scheme,
+      },
     };
 
     if (androidPrefix) {
@@ -325,34 +323,35 @@
 
   // determine if <activity> is the main activity
   function isLaunchActivity(activity) {
-    const intentFilters = activity["intent-filter"];
-    let isLauncher = false;
+    // const intentFilters = activity;
+    // let isLauncher = false;
 
-    if (intentFilters == null || intentFilters.length === 0) {
-      return false;
-    }
+    // if (intentFilters == null || intentFilters.length === 0) {
+    //   return false;
+    // }
 
-    isLauncher = intentFilters.some(intentFilter => {
-      const action = intentFilter.action;
-      const category = intentFilter.category;
+    // isLauncher = intentFilters.some(intentFilter => {
+    //   const action = intentFilter.action;
+    //   const category = intentFilter.category;
 
-      if (
-        action == null ||
-        action.length !== 1 ||
-        category == null ||
-        category.length !== 1
-      ) {
-        return false;
-      }
+    //   if (
+    //     action == null ||
+    //     action.length !== 1 ||
+    //     category == null ||
+    //     category.length !== 1
+    //   ) {
+    //     return false;
+    //   }
 
-      const isMainAction =
-        action[0].$["android:name"] === "android.intent.action.MAIN";
-      const isLauncherCategory =
-        category[0].$["android:name"] === "android.intent.category.LAUNCHER";
+    //   const isMainAction =
+    //     action[0].$["android:name"] === "android.intent.action.MAIN";
+    //   const isLauncherCategory =
+    //     category[0].$["android:name"] === "android.intent.category.LAUNCHER";
 
-      return isMainAction && isLauncherCategory;
-    });
+    //   return isMainAction && isLauncherCategory;
+    // });
 
-    return isLauncher;
+    // return isLauncher;
+    return activity.androidName === "io.branch.IntentHandlingActivity";
   }
 })();
