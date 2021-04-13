@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.pacificalabs.pacifica.MainActivity;
+
 public class IntentHandlingActivity extends Activity {
 
   @Override
@@ -20,7 +22,7 @@ public class IntentHandlingActivity extends Activity {
 
   private void handleIntent(Intent intent) {
     intent.setClass(this,
-      getApplicationContext().getClass());
+      MainActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     startActivity(intent);
   }

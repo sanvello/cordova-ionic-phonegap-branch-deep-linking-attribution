@@ -28,7 +28,8 @@
     manifest.file = updateBranchAppLinks(
       manifest.file,
       manifest.mainActivityIndex,
-      preferences
+      preferences,
+      manifest.interMediateActivityIndex
     );
 
     // save manifest
@@ -70,10 +71,15 @@
       manifest.manifest.application[0].activity
     );
 
+    const interMediateActivityIndex = appendIntermediateActivity(
+      manifest.manifest.application[0].activity
+    );
+
     return {
       file: manifest,
       path: pathToManifest,
       mainActivityIndex: mainActivityIndex,
+      interMediateActivityIndex: interMediateActivityIndex,
     };
   }
 
@@ -186,9 +192,14 @@
   //       <data android:scheme="https" android:host="ethan.app.link" />
   //       <data android:scheme="https" android:host="ethan-alternate.app.link" />
   //    </intent-filter>
-  function updateBranchAppLinks(manifest, mainActivityIndex, preferences) {
+  function updateBranchAppLinks(
+    manifest,
+    mainActivityIndex,
+    preferences,
+    intermediateActivityIndex
+  ) {
     let intentFilters =
-      manifest.manifest.application[0].activity[mainActivityIndex][
+      manifest.manifest.application[0].activity[intermediateActivityIndex][
         "intent-filter"
       ] || [];
     const data = getAppLinkIntentFilterData(preferences);
@@ -202,30 +213,11 @@
     intentFilters = removeBasedOnAndroidName(intentFilters, androidName);
 
     // add new (remove old already done in updateBranchURIScheme)
-    manifest.manifest.application[0].activity[mainActivityIndex][
+    manifest.manifest.application[0].activity[intermediateActivityIndex][
       "intent-filter"
     ] = intentFilters.concat([
       {
         $: header,
-        action: [
-          {
-            $: {
-              "android:name": "android.intent.action.VIEW",
-            },
-          },
-        ],
-        category: [
-          {
-            $: {
-              "android:name": "android.intent.category.DEFAULT",
-            },
-          },
-          {
-            $: {
-              "android:name": "android.intent.category.BROWSABLE",
-            },
-          },
-        ],
         data: data,
       },
     ]);
@@ -306,8 +298,7 @@
     return without;
   }
 
-  // get the main <activity> because Branch Intent Filters must be in the main Launch Activity
-  function getMainLaunchActivityIndex(activities) {
+  function appendIntermediateActivity(activities) {
     let launchActivityIndex = -1;
 
     const activity = {
@@ -328,7 +319,7 @@
     } else {
       for (let i = 0; i < activities.length; i++) {
         const activity = activities[i];
-        if (isLaunchActivity(activity)) {
+        if (isIntermediateActivity(activity)) {
           launchActivityIndex = i;
           break;
         }
@@ -337,8 +328,54 @@
     return launchActivityIndex;
   }
 
+  function isIntermediateActivity(activity) {
+    return activity.$["android:name"] === "io.branch.IntentHandlingActivity";
+  }
+
+  // get the main <activity> because Branch Intent Filters must be in the main Launch Activity
+  function getMainLaunchActivityIndex(activities) {
+    let launchActivityIndex = -1;
+
+    for (let i = 0; i < activities.length; i++) {
+      const activity = activities[i];
+      if (isLaunchActivity(activity)) {
+        launchActivityIndex = i;
+        break;
+      }
+    }
+    return launchActivityIndex;
+  }
+
   // determine if <activity> is the main activity
   function isLaunchActivity(activity) {
-    return activity.$["android:name"] === "io.branch.IntentHandlingActivity";
+    const intentFilters = activity["intent-filter"];
+    let isLauncher = false;
+
+    if (intentFilters == null || intentFilters.length === 0) {
+      return false;
+    }
+
+    isLauncher = intentFilters.some((intentFilter) => {
+      const action = intentFilter.action;
+      const category = intentFilter.category;
+
+      if (
+        action == null ||
+        action.length !== 1 ||
+        category == null ||
+        category.length !== 1
+      ) {
+        return false;
+      }
+
+      const isMainAction =
+        action[0].$["android:name"] === "android.intent.action.MAIN";
+      const isLauncherCategory =
+        category[0].$["android:name"] === "android.intent.category.LAUNCHER";
+
+      return isMainAction && isLauncherCategory;
+    });
+
+    return isLauncher;
   }
 })();
