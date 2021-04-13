@@ -310,48 +310,35 @@
   function getMainLaunchActivityIndex(activities) {
     let launchActivityIndex = -1;
 
-    for (let i = 0; i < activities.length; i++) {
-      const activity = activities[i];
-      if (isLaunchActivity(activity)) {
-        launchActivityIndex = i;
-        break;
+    const activity = {
+      $: {
+        "android:launchMode": "singleTask",
+        "android:name": "io.branch.IntentHandlingActivity",
+      },
+      "intent-filter": [],
+    };
+    if (
+      activities.filter(
+        (activity) =>
+          activity.$["android:name"] === "io.branch.IntentHandlingActivity"
+      ).length === 0
+    ) {
+      activities.push(activity);
+      launchActivityIndex = activities.length - 1;
+    } else {
+      for (let i = 0; i < activities.length; i++) {
+        const activity = activities[i];
+        if (isLaunchActivity(activity)) {
+          launchActivityIndex = i;
+          break;
+        }
       }
     }
-
     return launchActivityIndex;
   }
 
   // determine if <activity> is the main activity
   function isLaunchActivity(activity) {
-    // const intentFilters = activity;
-    // let isLauncher = false;
-
-    // if (intentFilters == null || intentFilters.length === 0) {
-    //   return false;
-    // }
-
-    // isLauncher = intentFilters.some(intentFilter => {
-    //   const action = intentFilter.action;
-    //   const category = intentFilter.category;
-
-    //   if (
-    //     action == null ||
-    //     action.length !== 1 ||
-    //     category == null ||
-    //     category.length !== 1
-    //   ) {
-    //     return false;
-    //   }
-
-    //   const isMainAction =
-    //     action[0].$["android:name"] === "android.intent.action.MAIN";
-    //   const isLauncherCategory =
-    //     category[0].$["android:name"] === "android.intent.category.LAUNCHER";
-
-    //   return isMainAction && isLauncherCategory;
-    // });
-
-    // return isLauncher;
     return activity.$["android:name"] === "io.branch.IntentHandlingActivity";
   }
 })();

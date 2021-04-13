@@ -52,11 +52,6 @@ SOFTWARE.
 
   <!-- Android -->
   <platform name="android">
-      <config-file target="AndroidManifest.xml" parent="application">
-      <activity android:name="io.branch.IntentHandlingActivity" android:launchMode="singleTask">
-      <intent-filter></intent-filter>
-      </activity>
-    </config-file>
     <config-file target="config.xml" parent="/*">
       <feature name="BranchSDK">
         <param name="android-package" value="io.branch.BranchSDK" />
@@ -65,7 +60,6 @@ SOFTWARE.
     </config-file>
 
     
-
     <!-- Manifest configuration is done via a js script.  We should move it to this config in the future. -->
 
     <source-file src="src/android/io/branch/BranchSDK.java" target-dir="src/io/branch" />
