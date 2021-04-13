@@ -60,11 +60,6 @@ SOFTWARE.
     </config-file>
     <config-file target="AndroidManifest.xml" parent="application">
       <activity android:name="io.branch.IntentHandlingActivity" android:launchMode="singleTask">
-        <intent-filter>
-          <category android:name="android.intent.action.VIEW"/>
-          <category android:name="android.intent.category.DEFAULT"/>
-          <category android:name="android.intent.category.BROWSABLE"/>
-        </intent-filter>
       </activity>
     </config-file>
     
