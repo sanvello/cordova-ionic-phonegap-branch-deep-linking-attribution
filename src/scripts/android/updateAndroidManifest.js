@@ -352,6 +352,6 @@
     // });
 
     // return isLauncher;
-    return activity.androidName === "io.branch.IntentHandlingActivity";
+    return activity.$["android:name"] === "io.branch.IntentHandlingActivity";
   }
 })();
