@@ -293,6 +293,11 @@ public class BranchSDK extends CordovaPlugin {
         if (data != null && data.isHierarchical()) {
             this.deepLinkUrl = data.toString();
         }
+        
+        // Since the plugin does not cleanup after non branch links this results in duplication of deeplinks
+        // returning the same deep link on app resume instead of only the first time
+        // setting it to empty string instead of Null to prevent crashes but also cleanup.
+        activity.getIntent().setData(Uri.parse(""));
 
         this.instance.initSession(new SessionListener(callbackContext), data, activity);
     }
