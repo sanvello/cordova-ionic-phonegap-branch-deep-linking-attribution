@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSMutableArray *branchUniversalObjArray;
 
 // BranchSDK Basic Methods
+- (void)enableTestMode:(CDVInvokedUrlCommand*)command;
 - (void)initSession:(CDVInvokedUrlCommand*)command;
 - (void)disableTracking:(CDVInvokedUrlCommand*)command;
 - (void)setDebug:(CDVInvokedUrlCommand*)command;
