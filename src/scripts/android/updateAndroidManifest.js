@@ -305,6 +305,7 @@
       $: {
         "android:launchMode": "singleTask",
         "android:name": "io.branch.IntentHandlingActivity",
+        "android:exported": "true",
       },
       "intent-filter": [],
     };
