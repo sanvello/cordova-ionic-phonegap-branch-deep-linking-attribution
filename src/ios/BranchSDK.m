@@ -791,7 +791,7 @@ NSString * const pluginVersion = @"4.1.3";
   NSMutableDictionary *json = [NSMutableDictionary new];
 
   Branch *branch = [self getInstance];
-  [branch lastAttributedTouchDataWithAttributionWindow:30 completion:^(BranchLastAttributedTouchData * _Nullable latd) {
+  [branch lastAttributedTouchDataWithAttributionWindow:30 completion:^(BranchLastAttributedTouchData * _Nullable latd, NSError * _Nullable error) {
     CDVPluginResult* pluginResult = nil;
     if (latd) {
       [json setObject:latd.attributionWindow forKey:@"attribution_window"];
