@@ -24,7 +24,7 @@ SOFTWARE.
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
   xmlns:android="http://schemas.android.com/apk/res/android"
   id="branch-cordova-sdk"
-  version="4.1.2">
+  version="4.2.4">
 
   <!-- Description -->
   <name>branch-cordova-sdk</name>
@@ -40,6 +40,7 @@ SOFTWARE.
   </engines>
 
   <!-- Hooks -->
+  <hook src="src/scripts/hooks/beforePluginInstall.js" type="before_plugin_install" />
   <hook src="src/scripts/hooks/beforePrepare.js" type="after_plugin_install" />
   <hook src="src/scripts/hooks/afterPrepare.js" type="after_plugin_add" />
   <hook src="src/scripts/hooks/beforePrepare.js" type="before_prepare" />
@@ -64,7 +65,7 @@ SOFTWARE.
 
     <source-file src="src/android/io/branch/BranchSDK.java" target-dir="src/io/branch" />
     <source-file src="src/android/io/branch/IntentHandlingActivity.java" target-dir="src/io/branch" />
-    <framework src="io.branch.sdk.android:library:4.3.2"/>
+    <framework src="io.branch.sdk.android:library:5.0.8"/>
   </platform>
 
   <!-- iOS -->
@@ -90,10 +91,10 @@ SOFTWARE.
     
       <podspec>
           <config>
-              <source url="https://github.com/CocoaPods/Specs.git"/>
+              <source url="https://cdn.cocoapods.org/"/>
           </config>
           <pods>
-              <pod name="Branch" spec="~> 0.35.0" />
+              <pod name="Branch" spec="~> 1.39.2" />
           </pods>
       </podspec>
   </platform>

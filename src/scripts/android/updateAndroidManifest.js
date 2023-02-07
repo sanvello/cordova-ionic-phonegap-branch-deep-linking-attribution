@@ -7,6 +7,7 @@
   // entry
   module.exports = {
     writePreferences: writePreferences,
+    getAppLinkIntentFilterData: getAppLinkIntentFilterData
   };
 
   // injects config.xml preferences into AndroidManifest.xml file.
@@ -92,8 +93,13 @@
     const keys = ["io.branch.sdk.BranchKey", "io.branch.sdk.TestMode"];
     const vals = [
       preferences.branchKey,
-      preferences.androidTestMode || "false",
+      preferences.branchTestMode || preferences.androidTestMode || "false"
     ];
+
+    if (preferences.branchKeyTest) {
+      keys.push("io.branch.sdk.BranchKey.test");
+      vals.push(preferences.branchKeyTest);
+    }
 
     // remove old
     for (var i = 0; i < keys.length; i++) {
@@ -228,13 +234,17 @@
   // determine the Branch link domain <data> to append to the App Link intent filter
   function getAppLinkIntentFilterData(preferences) {
     const intentFilterData = [];
-    const linkDomains = preferences.linkDomain;
+    const linkDomains = [...preferences.androidLinkDomain, ...preferences.linkDomain];
 
     for (let i = 0; i < linkDomains.length; i++) {
       const linkDomain = linkDomains[i];
 
       // app.link link domains need -alternate associated domains as well (for Deep Views)
       if (linkDomain.indexOf("app.link") !== -1) {
+        const isAlternateDomain = linkDomain.indexOf("-alternate") !== -1;
+        if(isAlternateDomain){
+          continue;
+        }
         const first = linkDomain.split(".")[0];
         const rest = linkDomain.split(".").slice(1).join(".");
         const alternate = `${first}-alternate` + `.${rest}`;
