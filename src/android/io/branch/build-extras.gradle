@@ -5,5 +5,5 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.sanvello:android-branch-deep-linking-attribution:develop-SNAPSHOT'
+    implementation 'com.github.sanvello:android-branch-deep-linking-attribution:develop-e788d8e9e7-1'
 }
