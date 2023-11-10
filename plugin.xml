@@ -65,7 +65,7 @@ SOFTWARE.
 
     <source-file src="src/android/io/branch/BranchSDK.java" target-dir="src/io/branch" />
     <source-file src="src/android/io/branch/IntentHandlingActivity.java" target-dir="src/io/branch" />
-    <framework src="io.branch.sdk.android:library:5.2.0"/>
+    <lib-file src="src/android/libs/classes.jar" />
   </platform>
 
   <!-- iOS -->
