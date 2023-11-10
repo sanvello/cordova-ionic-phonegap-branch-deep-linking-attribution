@@ -65,7 +65,8 @@ SOFTWARE.
 
     <source-file src="src/android/io/branch/BranchSDK.java" target-dir="src/io/branch" />
     <source-file src="src/android/io/branch/IntentHandlingActivity.java" target-dir="src/io/branch" />
-    <lib-file src="src/android/libs/classes.jar" />
+    <lib-file src="src/android/libs/branch-classes.jar" />
+    <lib-file src="src/android/libs/installreferrer-classes.jar" />
   </platform>
 
   <!-- iOS -->
